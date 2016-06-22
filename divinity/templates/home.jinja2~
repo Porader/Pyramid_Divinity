@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="${request.locale_name}">
+{% extends "uppage.jinja2" %}
+{% block page %}
+<title>Главная</title>
+<div id="page" style="clear: both; margin-left:auto; margin-right:auto; width: 75%; background: rgba(255, 255, 255, 0.7);">
+    {% for category in categories %}
+    <div id="categories" style="margin-left:auto; margin-right:auto; width: 95%; text-align:center; font-size:30px">
+    Категория "{{category.name}}"
+    </div>
+    <table border="2" style="margin-left:auto; margin-right:auto; width: 95%; text-align:center; vertical-align:middle; background: rgba(0, 0, 0, 1); color: white">
+         <thead>
+	     <tr>
+	     <th> Уровень ремесла </th>
+	     <th> Предмет </th>
+             <th> Компоненты</th>
+             </tr>
+	 </thead>
+         <tbody>
+         {% for item in category.items %}
+         {% for recipe in item.recipe_use %}
+         <tr>
+         <td>{{recipe.level}}</td>
+	 <td><a href="http://localhost:6543/item/{{recipe.result_item.id}}"><img style="margin-left:auto; margin-right:auto; width: 35px; height: 35px;" src="static/image/{{recipe.result_item.image}}" alt="photo""> {{recipe.result_item.name}}</a></td>
+         <td>
+ 	     <a href="http://localhost:6543/item/{{recipe.first_item[0].id}}"><img style="margin-left:auto; margin-right:auto; width: 35px; height: 35px;" src="static/image/{{recipe.first_item[0].image}}" alt="photo">{{recipe.first_item[0].name}}</a>
+               +  
+             <a href="http://localhost:6543/item/{{recipe.second_item[0].id}}"><img style="margin-left:auto; margin-right:auto; width: 35px; height: 35px;" src="static/image/{{recipe.second_item[0].image}}" alt="photo">{{recipe.second_item[0].name}}</a>
+         </td>
+         </tr>
+         {% endfor %}
+         {% endfor %}
+         </tbody>
+    </table>
+    {% endfor %}
+<h2> &nbsp </h2>
+</div>
+{% endblock %}
+</html>

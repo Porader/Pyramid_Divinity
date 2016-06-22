@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="${request.locale_name}">
+{% extends "uppage.jinja2" %}
+{% block page %}
+<title>Регистрация</title>
+<form action="" method="POST" style="clear: both; margin-left:auto; margin-right:auto; width: 35%; height: 100%; background: rgba(255, 255, 255, 0.7); text-align:center;">
+<h2>Регистрация</h2>
+	<table style="margin-left:auto; margin-right:auto; width: 51%; text-align:left; vertical-align:middle;" >
+	<tr>
+	<td><label for="login" class="required">Логин <span class="required">*</span></label></td>
+        <td><input name="login" type="text" value="{{ login }}" /></td>
+	</tr>
+	<tr>
+	<td><label for="fullname" class="required">Полное имя <span class="required">*</span></label></td>
+        <td><input name="fullname" type="text" value="{{ fullname }}" /></td>
+	</tr>
+	<tr>
+	<td><label for="password" class="required">Пароль <span class="required">*</span></label></td>
+	<td><input name="password" type="password" /></td>
+	</tr>
+	<tr>
+	<td><label for="password_copy" class="required">Повторите пароль <span class="required">*</span></label></td>
+	<td><input name="password_copy" type="password" /></td>
+	</tr>
+	</table>
+	<a>&nbsp</a>
+	<input type="submit" value="Зарегистрироваться" />
+{% if message == "Passwords do not match" %}
+<p>Пароли не совпадают!</p>
+{% endif %}
+{% if message == "Passwords or login is none" %}
+<p>Заполнены не все поля!</p>
+{% endif %}
+{% if message == "User already exists" %}
+<p>Пользователь с таким именем уже существует!</p>
+{% endif %}
+<h4>&nbsp</h4>
+</form>
+{% endblock %}
+</html>

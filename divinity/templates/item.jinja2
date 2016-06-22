@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+{% extends "uppage.jinja2" %}
+{% block page %}
+{% if item!=None %}
+<title>Информация о {{item.name}}</title>
+	<div style="clear: both; margin-left:auto; margin-right:auto; width: 50%; background: rgba(255, 255, 255, 0.7);">
+		<div style="margin-left:auto; margin-right:auto; width: 100%;">
+		<h4>&nbsp</h4>
+		<table border="2" style="margin-left:auto; margin-right:auto; width: 90%; text-align:center; vertical-align:middle; background: rgba(0, 0, 0, 1); color: white">
+		<thead>
+			<tr>
+			<th style="color: green;font-size: 30px;"> {{item.name}} </th>
+			</tr>
+		</thead>
+		<tbody>
+		<tr>
+		<td>
+		<img  style="margin-left:auto; margin-right:auto; width: 70px; height: 70px;" src="http://localhost:6543/static/image/{{item.image}}" alt="item_image">
+		</td>
+		</tr>
+		<tr>
+		<td>
+		<div style="text-align:left;"> 
+		{% if item.info!=None and item.info!="" %}
+		Описание:
+		{{item.info}}
+		{% else %}
+		<p>Описание отсутвует.</p>
+		{% endif %}
+		</div>
+		</td>
+		</tr>
+		<tr>
+		<td>
+		<table border = 5 style="width: 100%;">
+		<thead>
+			<tr>
+			<th> Рецепты для получения предмета </th>
+			<th> Используется в рецептах </th>
+			</tr>
+		</thead>
+		<tbody>
+		<tr>
+		<td>
+		{% for recipe in item.recipe_use %}
+			<p><a style="margin-left:auto; margin-right:auto; width: 100%; text-align: center;" href="http://localhost:6543/recipe/{{recipe.id}}">{{recipe.result_item.name}}</a></p>
+		{% endfor %}
+		</td>
+		<td>
+		{% for recipe in item.first_items %}
+			<p><a style="margin-left:auto; margin-right:auto; width: 100%; text-align: center;" href="http://localhost:6543/recipe/{{recipe.id}}">{{recipe.result_item.name}}</a></p>
+		{% endfor %}
+		{% for recipe in item.second_items %}
+			<p><a style="margin-left:auto; margin-right:auto; width: 100%; text-align: center;" href="http://localhost:6543/recipe/{{recipe.id}}">{{recipe.result_item.name}}</a></p>
+		{% endfor %}
+		</td>
+		</tr>
+		</table>
+		</td>
+		</tr>
+		</table>
+		<h4>&nbsp</h4>
+		</div>	
+	</div>
+{% else %}
+<title>Предмет не найден</title>
+{% endif %}
+{% endblock %}

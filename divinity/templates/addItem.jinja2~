@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="${request.locale_name}">
+{% extends "uppage.jinja2" %}
+{% block page %}
+<title>Добавление нового предмета</title>
+<form action="" method="POST" style="clear: both; margin-left:auto; margin-right:auto; width: 35%; height: 100%; background: rgba(255, 255, 255, 0.7); text-align:center;" enctype="multipart/form-data">
+<h2>Добавление нового предмета</h2>
+	<table style="margin-left:auto; margin-right:auto; width: 60%; text-align:left; vertical-align:middle;" >
+	<tr>
+	<td><label for="item_name" class="required">Название <span class="required">*</span></label></td>
+        <td><input name="item_name" type="text" value="{{ item_name }}" /></td>
+	</tr>
+	<tr>
+	<td><label for="item_info" class="required">Описание </label></td>
+        <td><textarea name="item_info" type="text" value="{{ item_info }}"></textarea></td>
+	</tr>
+	<tr>
+	<td><label for="item_category" class="required">Категория <span class="required">*</span></label></td>
+	<td><select name="item_category" width: 50%;">
+	    <option value="">Не выбрана</option>
+        	{% for category in categories %}
+             		<option value="{{ category.id }}">
+                    		{{ category.name }}</option>
+        	{% endfor %}
+	     </select></p></td>
+	</tr>
+	<tr>
+	<td><label for="item_image" class="required">Изображение <span class="required">*</span></label></td>
+	<td><input name="item_image" type="file" accept="image/jpeg"/></td>
+	</tr>
+	</table>
+	<a>&nbsp</a>
+	<input type="submit" value="Добавить предмет" />
+{% if message == "added" %}
+<p style="font-size: 30px; color:green">Предмет добавлен!</p>
+{% endif %}
+{% if message == "nofull" %}
+<p style="font-size: 30px; color:red">Заполнены не все поля!</p>
+{% endif %}
+{% if message == "Name already exists" %}
+<p style="font-size: 30px; color:red">Предмет с таким именем уже существует!</p>
+{% else %}
+<h4>&nbsp</h4>
+{% endif %}
+
+</form>
+{% endblock %}
+</html>

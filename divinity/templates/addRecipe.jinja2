@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+{% extends "uppage.jinja2" %}
+{% block page %}
+<title>Добавление нового рецепта</title>
+<form action="" method="POST" style="clear: both; margin-left:auto; margin-right:auto; width: 35%; height: 100%; background: rgba(255, 255, 255, 0.7); text-align:center;" enctype="multipart/form-data">
+<h2>Добавление нового рецепта</h2>
+	<table style="margin-left:auto; margin-right:auto; width: 60%; text-align:left; vertical-align:middle;" >
+	<tr>
+	<td><label for="recipe_level" class="required">Уровень ремесла <span class="required">*</span></label></td>
+        <td><input name="recipe_level" type="text" value="{{ recipe_level }}" /></td>
+	</tr>
+	<tr>
+	<td><label for="recipe_final" class="required">Финальный предмет <span class="required">*</span></label></td>
+	<td><select name="recipe_final" width: 50%;">
+	    <option value="">Не выбран</option>
+        	{% for item in items %}
+             		<option value="{{ item.id }}">
+                    		{{ item.name }}</option>
+        	{% endfor %}
+	     </select></p></td>
+	</tr>
+	<tr>
+	<td><label for="recipe_first" class="required">Первый компонент <span class="required">*</span></label></td>
+	<td><select name="recipe_first" width: 50%;">
+	    <option value="">Не выбран</option>
+        	{% for item in items %}
+             		<option value="{{ item.id }}">
+                    		{{ item.name }}</option>
+        	{% endfor %}
+	     </select></p></td>
+	</tr>
+	<tr>
+	<td><label for="recipe_second" class="required">Второй компонент <span class="required">*</span></label></td>
+	<td><select name="recipe_second" width: 50%;">
+	    <option value="">Не выбран</option>
+        	{% for item in items %}
+             		<option value="{{ item.id }}">
+                    		{{ item.name }}</option>
+        	{% endfor %}
+	     </select></p></td>
+	</tr>
+	</table>
+	<a>&nbsp</a>
+	<input type="submit" value="Добавить рецепт" />
+{% if message == "added" %}
+<p style="font-size: 30px; color:green">Рецепт добавлен!</p>
+{% endif %}
+{% if message == "nofull" %}
+<p style="font-size: 30px; color:red">Заполнены не все поля!</p>
+{% else %}
+<h4>&nbsp</h4>
+{% endif %}
+
+</form>
+{% endblock %}

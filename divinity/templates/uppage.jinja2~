@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+    <head>
+          <style type="text/css">
+	  A {
+		text-decoration :none;
+	    }
+	  A:hover {
+	   
+           color:red;
+		   }
+	  </style>
+    </head>
+    <body background="{{request.static_url('divinity:static/image/background.jpg')}}" vlink="white">
+        <header>
+            <div id="inner">
+                <div id="login" style="font-size: 17px;float: right">
+                    {% if username!=none%}
+                        Добро пожаловать, {{user.fullname}}!<br>
+			<div style="float: right;">Ваш логин: {{username}}!</div><br>
+			<a style="float: right;" href="/addCategory">Добавить категорию </a><br>
+			<a style="float: right;" href="/addItem">Добавить предмет </a><br>
+			<a style="float: right;" href="/addRecipe">Добавить рецепт </a><br>
+			<img style="width: 22px; height: 22px;float: right;" src="{{request.static_url('divinity:static/image/exit.png')}}">
+			<a style="float: right;" href="/logout">Выход </a>
+                    {%else%}
+                        <a><img style="width: 22px; height: 22px; float: right;" src="{{request.static_url('divinity:static/image/login.png')}}"></a>
+			<a style="float: right; margin-left: 10px" href="/login">Вход</a><br>
+			<a style="float: right;" href="/registration">Регистрация</a>
+                    {%endif%}
+                </div>
+            </div>
+        </header>
+        
+        <div id="home" style="clear: both; margin-left:auto; margin-right:auto; width: 700px;">
+             <a href="/"><img src="{{request.static_url('divinity:static/image/logo.png')}}"></a>
+         </div>
+
+        {% block page %}{% endblock %}
+        
+        <footer>
+            <p style="text-align:center;color:black">© 2016 Фаткуллин Рустам</p>
+        </footer>
+
+    </body>

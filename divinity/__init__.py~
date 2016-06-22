@@ -1,0 +1,51 @@
+from pyramid.config import Configurator
+from models import User, Session, Base, engine, Item, Recipe, Category
+from pyramid.session import SignedCookieSessionFactory
+from sqlalchemy import inspect
+from pyramid.authentication import AuthTktAuthenticationPolicy
+from pyramid.authorization import ACLAuthorizationPolicy
+from pyramid.security import Allow, Deny
+from pyramid.security import Authenticated
+
+
+my_session_factory = SignedCookieSessionFactory('itsaseekreet')
+
+class MyFactory(object):
+	def __init__(self, request):
+		self.__acl__ = [(Allow, Authenticated, "add")]
+
+def main(global_config, **settings):
+	Base.metadata.create_all()
+	if (len(result) == 0):
+		new_user = User(name="admin", password = "admin", fullname="Administrator", info="this user is administrator")
+		DBSession.add(new_user)
+		DBSession.commit()
+        authn_policy = AuthTktAuthenticationPolicy('sosecret', hashalg='sha512')
+        authz_policy = ACLAuthorizationPolicy()
+
+	config = Configurator(settings=settings, session_factory=my_session_factory, root_factory=MyFactory)
+        #config = Configurator(settings=settings, root_factory='divinity.models.AccessGroups')
+        config.set_authentication_policy(authn_policy)
+        config.set_authorization_policy(authz_policy)
+	config.include('pyramid_debugtoolbar')
+	config.include('pyramid_jinja2')
+        
+	config.add_static_view('static', 'static', cache_max_age=3600)
+	config.add_route('home', '/')
+	config.add_route('login', '/login')
+        config.add_route('logout', '/logout')
+	config.add_route('registration', '/registration')
+	config.add_route('addItem', '/addItem')
+	config.add_route('addCategory', '/addCategory')
+	config.add_route('addRecipe', '/addRecipe')
+	config.add_route('item', '/item/{id}')
+	config.add_route('recipe', '/recipe/{id}')
+        
+	config.scan()
+
+
+	inspector = inspect(engine)
+	print(inspector.get_table_names())
+
+	return config.make_wsgi_app()
+
